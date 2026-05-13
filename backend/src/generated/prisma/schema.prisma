@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  ARTIST
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+}
+
+enum TicketStatus {
+  ACTIVE
+  USED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+  REFUNDED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(ARTIST)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  artist Artist?
+}
+
+model Artist {
+  id      String  @id @default(cuid())
+  name    String
+  bio     String?
+  asaasId String?
+  userId  String  @unique
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  events Event[]
+}
+
+model Event {
+  id        String      @id @default(cuid())
+  title     String
+  city      String
+  date      DateTime
+  price     Decimal     @db.Decimal(10, 2)
+  status    EventStatus @default(DRAFT)
+  artistId  String
+  createdAt DateTime    @default(now())
+
+  artist  Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  tickets Ticket[]
+}
+
+model Ticket {
+  id         String       @id @default(cuid())
+  qrCode     String       @unique
+  status     TicketStatus @default(ACTIVE)
+  eventId    String
+  buyerEmail String
+
+  event   Event    @relation(fields: [eventId], references: [id])
+  payment Payment?
+}
+
+model Payment {
+  id       String        @id @default(cuid())
+  asaasId  String        @unique
+  amount   Decimal       @db.Decimal(10, 2)
+  fee      Decimal       @default(1.00) @db.Decimal(10, 2)
+  status   PaymentStatus @default(PENDING)
+  ticketId String        @unique
+
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+}
