@@ -56,7 +56,7 @@ export class TicketService {
 		if (ticket.status === 'CANCELLED') throw new AppError('Ingresso cancelado')
 
 		return prisma.ticket.update({
-			where: { id: ticketId },
+			where: { id: ticketId, status: 'ACTIVE' },
 			data: { status: 'USED' },
 		})
 	}

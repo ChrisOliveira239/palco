@@ -1,0 +1,30 @@
+{
+	"home": {
+		"title": "Eventos",
+		"empty": "Nenhum evento disponível."
+	},
+	"event": {
+		"by": "por",
+		"free": "Gratuito",
+		"buy": "Comprar ingresso",
+		"emailLabel": "Seu e-mail",
+		"emailPlaceholder": "voce@email.com",
+		"buying": "Processando...",
+		"success": "Ingresso comprado! Verifique seu e-mail.",
+		"errorRequired": "E-mail obrigatório.",
+		"errorGeneric": "Erro ao comprar. Tente novamente."
+	},
+	"myTickets": {
+		"title": "Meus ingressos",
+		"emailLabel": "Seu e-mail",
+		"emailPlaceholder": "voce@email.com",
+		"search": "Buscar",
+		"searching": "Buscando...",
+		"empty": "Nenhum ingresso encontrado.",
+		"status": {
+			"ACTIVE": "Ativo",
+			"USED": "Utilizado",
+			"CANCELLED": "Cancelado"
+		}
+	}
+}
