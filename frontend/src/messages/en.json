@@ -1,0 +1,30 @@
+{
+	"home": {
+		"title": "Events",
+		"empty": "No events available."
+	},
+	"event": {
+		"by": "by",
+		"free": "Free",
+		"buy": "Buy ticket",
+		"emailLabel": "Your email",
+		"emailPlaceholder": "you@email.com",
+		"buying": "Processing...",
+		"success": "Ticket purchased! Check your email.",
+		"errorRequired": "Email is required.",
+		"errorGeneric": "Purchase failed. Please try again."
+	},
+	"myTickets": {
+		"title": "My tickets",
+		"emailLabel": "Your email",
+		"emailPlaceholder": "you@email.com",
+		"search": "Search",
+		"searching": "Searching...",
+		"empty": "No tickets found.",
+		"status": {
+			"ACTIVE": "Active",
+			"USED": "Used",
+			"CANCELLED": "Cancelled"
+		}
+	}
+}
