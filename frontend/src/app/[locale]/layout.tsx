@@ -4,24 +4,24 @@ import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+    return routing.locales.map((locale) => ({ locale }));
 }
 
 export default async function LocaleLayout({
-  children,
-  params,
+    children,
+    params,
 }: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+    children: React.ReactNode;
+    params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  if (!routing.locales.includes(locale as "pt" | "en")) notFound();
+    const { locale } = await params;
+    if (!routing.locales.includes(locale as "pt" | "en")) notFound();
 
-  const messages = await getMessages();
-  
-  return (
-    <NextIntlClientProvider messages={messages}>
-      {children}
-    </NextIntlClientProvider>
-  );
+    const messages = await getMessages();
+
+    return (
+        <NextIntlClientProvider messages={messages}>
+            {children}
+        </NextIntlClientProvider>
+    );
 }

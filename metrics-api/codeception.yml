@@ -1,0 +1,13 @@
+namespace: Tests
+actor_suffix: Tester
+paths:
+  tests: tests
+  output: tests/_output
+  data: tests/Support/Data
+  support: tests/Support
+  envs: tests/_envs
+params:
+  - .env.testing
+bootstrap: _bootstrap.php
+coverage:
+  enabled: false
