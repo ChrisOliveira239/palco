@@ -31,7 +31,7 @@ export function BuyForm({
         try {
             await api.tickets.buy({ eventId, buyerEmail: email });
             setSuccess(true);
-        } catch {
+        } catch(err) {
             setError(t("errorGeneric"));
         } finally {
             setLoading(false);

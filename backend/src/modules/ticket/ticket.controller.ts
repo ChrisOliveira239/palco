@@ -13,6 +13,7 @@ export class TicketController {
 	buy = async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const data = buySchema.parse(req.body)
+
 			return res.status(201).json(await this.service.buy(data))
 		} catch (err) { next(err) }
 	}
@@ -26,6 +27,7 @@ export class TicketController {
 	myTickets = async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const email = z.string().email().parse(req.query.email)
+			
 			return res.json(await this.service.findByEmail(email))
 		} catch (err) { next(err) }
 	}
