@@ -8,3 +8,4 @@ Route::post('/metrics', [MetricController::class, 'store']);
 Route::get('/metrics/artist/{artistId}', [MetricController::class, 'summary']);
 Route::get('/metrics/{artistId}/sales-by-month', [MetricController::class, 'salesByMonth']);
 Route::get('/metrics/{artistId}/top-events', [MetricController::class, 'topEvents']);
+Route::get('/metrics/{artistId}/revenue-by-period', [MetricController::class, 'revenueByPeriod']);

@@ -2,6 +2,8 @@
 namespace App\Repositories;
 
 use App\Models\Metric;
+use Carbon\Carbon;
+use MongoDB\BSON\UTCDateTime;
 
 class MetricRepository {
     public function create(array $data): Metric {
@@ -93,13 +95,45 @@ class MetricRepository {
             ]);
         });
 
-		$items = iterator_to_array($result, false);
+        $items = iterator_to_array($result, false);
 
-		return array_map(fn($item) => [
-			'event_id' 		=> (string) $item['_id'],
-			'total_revenue' => (float) 	$item['total_revenue'],
-			'total_tickets' => (int) 	$item['total_tickets']
-		], $items);
+        return array_map(fn($item) => [
+            'event_id' => (string) $item['_id'],
+            'total_revenue' => (float) $item['total_revenue'],
+            'total_tickets' => (int) $item['total_tickets'],
+        ], $items);
+    }
+
+    public function revenueByPeriod(string $artistId, string $from, string $to): array {
+        $fromDate = new UTCDateTime(Carbon::createFromFormat('Y-m', $from)->startOfMonth()->timestamp * 1000);
+        $toDate = new UTCDateTime(Carbon::createFromFormat('Y-m', $to)->endOfMonth()->timestamp * 1000);
+
+        $result = Metric::raw(function ($collection) use ($artistId, $fromDate, $toDate) {
+            return $collection->aggregate([
+                ['$match' => [
+                    'artist_id' => $artistId,
+                    'type' => 'sale',
+                    'created_at' => ['$gte' => $fromDate, '$lte' => $toDate],
+                ]],
+                ['$group' => [
+                    '_id' => [
+                        '$dateToString' => ['format' => '%Y-%m', 'date' => '$created_at'],
+                    ],
+                    'total_revenue' => ['$sum' => '$amount'],
+                    'total_tickets' => ['$sum' => 1],
+                ]],
+                ['$project' => [
+                    '_id' => 0,
+                    'period' => '$_id',
+                    'total_revenue' => 1,
+                    'total_tickets' => 1,
+                ]],
+
+                ['$sort' => ['period' => 1]],
+            ]);
+        });
+
+        return iterator_to_array($result, false);
     }
 
 }

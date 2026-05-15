@@ -33,4 +33,8 @@ class MetricService {
     public function getTopEventsByRevenue(string $artistId, int $limit = 10): array {
         return $this->repo->topEventsByRevenue($artistId, $limit);
     }
+
+    public function getRevenueByPeriod(string $artistId, string $from, string $to): array {
+        return $this->repo->revenueByPeriod($artistId, $from, $to);
+    }
 }
