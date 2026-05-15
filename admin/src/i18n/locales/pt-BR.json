@@ -1,0 +1,33 @@
+{
+	"loading": "Carregando...",
+	"error": "Erro ao buscar dados.",
+	"nav": {
+		"dashboard": "Dashboard",
+		"events": "Eventos",
+		"artists": "Artistas",
+		"tickets": "Ingressos"
+	},
+	"dashboard": {
+		"title": "Dashboard",
+		"total_revenue": "Receita Total",
+		"total_tickets": "Ingressos Vendidos",
+		"search_label": "ID do Artista",
+		"search_btn": "Buscar"
+	},
+	"events": {
+		"title": "Eventos",
+		"empty": "Nenhum evento encontrado.",
+		"col_title": "Título",
+		"col_city": "Cidade",
+		"col_date": "Data",
+		"col_status": "Status"
+	},
+	"artists": {
+		"title": "Artistas",
+		"empty": "Nenhum artista encontrado."
+	},
+	"tickets": {
+		"title": "Ingressos",
+		"empty": "Nenhum ingresso encontrado."
+	}
+}

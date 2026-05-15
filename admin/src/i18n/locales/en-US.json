@@ -1,0 +1,33 @@
+{
+	"loading": "Loading...",
+	"error": "Error fetching data.",
+	"nav": {
+		"dashboard": "Dashboard",
+		"events": "Events",
+		"artists": "Artists",
+		"tickets": "Tickets"
+	},
+	"dashboard": {
+		"title": "Dashboard",
+		"total_revenue": "Total Revenue",
+		"total_tickets": "Tickets Sold",
+		"search_label": "Artist ID",
+		"search_btn": "Search"
+	},
+	"events": {
+		"title": "Events",
+		"empty": "No events found.",
+		"col_title": "Title",
+		"col_city": "City",
+		"col_date": "Date",
+		"col_status": "Status"
+	},
+	"artists": {
+		"title": "Artists",
+		"empty": "No artists found."
+	},
+	"tickets": {
+		"title": "Tickets",
+		"empty": "No tickets found."
+	}
+}

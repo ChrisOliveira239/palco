@@ -6,8 +6,6 @@ use App\Http\Controllers\MetricController;
 
 Route::post('/metrics', [MetricController::class, 'store']);
 Route::get('/metrics/artist/{artistId}', [MetricController::class, 'summary']);
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
+Route::get('/metrics/{artistId}/sales-by-month', [MetricController::class, 'salesByMonth']);
+Route::get('/metrics/{artistId}/top-events', [MetricController::class, 'topEvents']);
+Route::get('/metrics/{artistId}/revenue-by-period', [MetricController::class, 'revenueByPeriod']);
