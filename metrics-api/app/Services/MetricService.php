@@ -17,12 +17,20 @@ class MetricService {
     }
 
     public function getSummaryByArtist(string $artistId): array {
-        $sales = $this->repo->revenueByArtist($artistId);
+        $data = $this->repo->revenueByArtist($artistId);
 
         return [
             'artist_id' => $artistId,
-            'total_revenue' => $sales->sum('amount'),
-            'total_tickets' => $sales->count(),
+            'total_revenue' => $data['total_revenue'],
+            'total_tickets' => $data['total_tickets'],
         ];
+    }
+
+    public function getSalesByMonth(string $artistId): array {
+        return $this->repo->salesByMonth($artistId);
+    }
+
+    public function getTopEventsByRevenue(string $artistId, int $limit = 10): array {
+        return $this->repo->topEventsByRevenue($artistId, $limit);
     }
 }

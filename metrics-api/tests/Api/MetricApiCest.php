@@ -94,4 +94,64 @@ class MetricApiCest {
             'total_tickets' => 0,
         ]);
     }
+
+    public function sales_by_month_returns_grouped_data(ApiTester $I): void {
+        $artistId = 'art-month-' . uniqid();
+
+        $I->sendPost('/api/metrics', [
+            'event_id' => 'evt-month-1',
+            'artist_id' => $artistId,
+            'ticket_id' => 'tkt-m1',
+            'amount' => 100.00,
+        ]);
+        $I->sendPost('/api/metrics', [
+            'event_id' => 'evt-month-2',
+            'artist_id' => $artistId,
+            'ticket_id' => 'tkt-m2',
+            'amount' => 50.00,
+        ]);
+
+        $I->sendGet('/api/metrics/' . $artistId . '/sales-by-month');
+
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            ['total_revenue' => 150.00, 'total_tickets' => 2],
+        ]);
+    }
+
+    public function sales_by_month_for_artist_without_sales_returns_empty_array(ApiTester $I): void {
+        $I->sendGet('/api/metrics/art-inexistente-month/sales-by-month');
+
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $I->seeResponseEquals('[]');
+    }
+
+    public function top_events_returns_sorted_by_revenue(ApiTester $I): void {
+        $artistId = 'art-top-' . uniqid();
+
+        $I->sendPost('/api/metrics', ['event_id' => 'evt-top-a', 'artist_id' => $artistId, 'ticket_id' => 'tkt-1', 'amount' => 300.00]);
+        $I->sendPost('/api/metrics', ['event_id' => 'evt-top-b', 'artist_id' => $artistId, 'ticket_id' => 'tkt-2', 'amount' => 100.00]);
+        $I->sendPost('/api/metrics', ['event_id' => 'evt-top-c', 'artist_id' => $artistId, 'ticket_id' => 'tkt-3', 'amount' => 200.00]);
+
+        $I->sendGet('/api/metrics/' . $artistId . '/top-events');
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+
+        $I->seeResponseContainsJson([
+            ['event_id' => 'evt-top-a', 'total_revenue' => 300.00, 'total_tickets' => 1],
+            ['event_id' => 'evt-top-c', 'total_revenue' => 200.00, 'total_tickets' => 1],
+            ['event_id' => 'evt-top-b', 'total_revenue' => 100.00, 'total_tickets' => 1],
+        ]);
+    }
+
+    public function top_events_for_artists_without_sales_returns_empty_array(ApiTester $I): void {
+        $I->sendGet('/api/metrics/art-inexistente-top/top-events');
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $I->seeResponseEquals('[]');
+    }
+
 }

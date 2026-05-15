@@ -21,4 +21,12 @@ class MetricController extends Controller {
     public function summary(string $artistId) {
         return response()->json($this->service->getSummaryByArtist($artistId));
     }
+
+    public function salesByMonth(string $artistId) {
+        return response()->json($this->service->getSalesByMonth($artistId));
+    }
+
+    public function topEvents(string $artistId) {
+        return response()->json($this->service->getTopEventsByRevenue($artistId));
+    }
 }
